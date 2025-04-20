@@ -30,6 +30,12 @@ jobs:
     - name: run makefile
       run: make
 
+    - name: Upload compiled binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: compiled-app
+        path: ABC.exe
+
   docker:
 
     runs-on: ubuntu-latest
@@ -38,6 +44,11 @@ jobs:
     steps:
     - name: checkout code
       uses: actions/checkout@v4
+
+    - name: Download compiled binary
+      uses: actions/download-artifact@v3
+      with:
+        name: compiled-app
 
     - name: build docker image
       run: docker build -t my_app:latest .
